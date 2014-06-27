@@ -16,7 +16,6 @@ def search_raw(query, limit=10):
     Reddit's search API is described here: See http://www.reddit.com/dev/api#GET_search
     """
     endpoint_url = api_url + "/search.json"
-    print query
     params = {
         'q': query,
         'limit': limit,
@@ -56,7 +55,7 @@ def reddit_link_to_annotation(link):
         creation_date = time.gmtime(float(data['created_utc']))
         # Date should look like this: "2014-06-18T02:01:05.435649+00:00",
         creation_date_string = time.strftime("%Y-%m-%dT%H:%M:%S.000000+00:00", creation_date)
-        
+
         cleaned_title = cgi.escape(data['title'])
         # Front-end wraps the text in <p>...</p>, so we can insert '</p><p>' to create two paragraphs.
         annotation_content = u"""
@@ -68,15 +67,15 @@ def reddit_link_to_annotation(link):
     </em>
 </a>
 """.format(cleaned_title = cleaned_title,
-           permalink = data['permalink'],
-           num_comments = data['num_comments'],
-           subreddit = data['subreddit'])
-        
+        permalink = data['permalink'],
+        num_comments = data['num_comments'],
+        subreddit = data['subreddit'])
+
         annotation = {
             'id': 'reddit-t3_%s' % data['id'],
             "updated": creation_date_string,
             'target': [],
-            "created": creation_date_string, 
+            "created": creation_date_string,
             'quote': '',
             'uri': data['url'],
             'user': 'acct:%s@reddit.com' % data['author'],
@@ -84,11 +83,11 @@ def reddit_link_to_annotation(link):
             "permissions": {
             "read": [
                 "group:__world__"
-            ], 
+            ],
             "admin": [
-            ], 
+            ],
             "update": [
-            ], 
+            ],
             "delete": [
             ]
             },
